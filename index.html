@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Pizza</title>
+
+    <!-- Bootsrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- LESS основний файл -->
+    <link rel="stylesheet/less" type="text/css" href="less/main.less" />
+    <!-- LESS JavaScript компілятор -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand sticky-top p-0" style="background-color: rgba(0,0,0,0.85); color: white " id="navbar1">
+    <div class="navbar-brand">
+        <div class="my-brand">
+            <span>PIZZA</span>
+            <span>KMA</span>
+            <img src="images/discount.svg">
+        </div>
+    </div>
+<!--    <div class="d-flex flex-column">-->
+            <div class="collapse navbar-collapse mr-auto d-flex flex-column" id="navbarText">
+                <div class="container-fluid p-0 d-flex flex-nowrap">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link disabled">(044) 222 5 222</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled d-none d-md-block">24 hours/7 days at week</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled d-none d-lg-block">Free pizza delivery </a>
+                        </li>
+                    </ul>
+                    <div class="btn btn-warning d-none d-md-block">Login</div>
+                </div>
+
+                <hr style="width: 100%; color: #888888; height: 1px; background-color:#6b6b6b; margin: 0" />
+                <div class="container-fluid p-0 d-flex flex-wrap">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link disabled">Pizza</a>
+                        </li>
+                    </ul>
+                    <div class="btn btn-warning d-md-none">Login</div>
+                </div>
+            </div>
+<!--    </div>-->
+</nav>
+
+<div class="sidenav">
+    <div class="container" style="padding: 0">
+        <div class="card rounded-0" id="order">
+            <div class="card-header">
+                <div class="row d-flex justify-content-between align-items-center">
+                    <h5 style="margin: 0">Order  <span class="badge badge-dark badge-pill bg-warning">3</span></h5>
+                    <h6 class="text-secondary text-right" style="margin: 0">Clear order</h6>
+                </div>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div>
+    </div>
+    <div class="foot">fdsfd</div>
+</div>
+
+<div class="container" id="main-content">
+    <div class="row justify-content-center">
+        <h2 class="font-weight-bold">All pizzas<span class="badge bg-warning badge-pill badge-dark">5</span></h2>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row justify-content-center" id="products-nav">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">All</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Meat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Ananias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Mushrooms</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sea products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Vega</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card pizza-card">
+                    <img src="images/pizza_1.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="Thumbnail label">Card title</h2>
+                        <h6 class="text-secondary">Meat pizza</h6>
+                        <p class="card-text">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12 ">169</div>
+                                <a href="#" class="btn" style="width:auto">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card pizza-card">
+                    <img src="images/pizza_1.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="Thumbnail label">Card title</h2>
+                        <h6 class="text-secondary">Meat pizza</h6>
+                        <p class="card-text">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12 ">169</div>
+                                <a href="#" class="btn" style="width:auto">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card pizza-card">
+                    <img src="images/pizza_1.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="Thumbnail label">Card title</h2>
+                        <h6 class="text-secondary">Meat pizza</h6>
+                        <p class="card-text">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12 ">169</div>
+                                <a href="#" class="btn" style="width:auto">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card pizza-card">
+                    <img src="images/pizza_1.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="font-italic">Card title</h2>
+                        <h6 class="text-secondary">Meat pizza</h6>
+                        <p class="card-text">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12 ">169</div>
+                                <a href="#" class="btn" style="width:auto">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card pizza-card">
+                    <img src="images/pizza_1.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="Thumbnail label">Card title</h2>
+                        <h6 class="text-secondary">Meat pizza</h6>
+                        <p class="card-text">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12 ">169</div>
+                                <a href="#" class="btn" style="width:auto">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card pizza-card">
+                    <img src="images/pizza_1.jpg" class="card-img-top">
+                    <div class="card-body">
+                        <h2 class="Thumbnail label">Card title</h2>
+                        <h6 class="text-secondary">Meat pizza</h6>
+                        <p class="card-text">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-12 ">169</div>
+                                <a href="#" class="btn" style="width:auto">Buy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row-fluid d-flex align-content-center flex-wrap footer">
+        <div class="container ">
+            <h6 class="text-center">Practice JavaScript 2.2</h6>
+        </div>
+</div>
+<!-- jQuery JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+<!--Bootsrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+<!--Own JavaScript -->
+<!--<script type="text/javascript"  src="assets/js/main.js"> </script>-->
+</body>
+</html>
