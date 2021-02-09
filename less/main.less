@@ -12,7 +12,7 @@
 }
 body{
   background: #fde8c0;
-  min-width: 440px;
+  min-width: 518px;
 }
 
 .bg-warning{
@@ -75,31 +75,77 @@ body{
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 100%;
-  background: #ff9900;
+  width: @sideBarWidth;
+  background: white;
+
+  .row{
+    padding: 10px 15px 10px 15px;
+  }
+
+  .btn{
+    width: 100%;
+  }
 }
+
+.discount-badge{
+  @discountWidth:70px;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  position: fixed;
+  left: 10px;
+  bottom: 0px;
+  height: 100px;
+  width: @discountWidth;
+  background: @mainColor;
+
+  .discount-img{
+    width: @discountWidth;
+    height: 10px;
+    position: absolute;
+    top: -10px;
+  }
+  h6{
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+  }
+  span{
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    border-top: 3px dotted darken(@mainColor,20%);
+    margin: 0px 5px 0px 5px;
+  }
+}
+
 #products-nav{
   margin-bottom: 10px;
 }
 
 .footer{
-  height: 100px;
+  height: 102px;
   background: #262626;
   margin-top: 30px;
   box-shadow: 0px -3px 10px 2px rgba(34, 60, 80, 0.2);
   margin-right: @sideBarWidth;
 }
 
-@media (max-width: 576px) {
-  #main-content{
-    padding-right: @sideBarSmallWidth;
-  }
-  #navbar1{
-    margin-right: @sideBarSmallWidth;
-  }
-  .sidenav {
-    width: @sideBarSmallWidth;
-  }
-}
+//@media (max-width: 576px) {
+//  #main-content{
+//    padding-right: @sideBarSmallWidth;
+//  }
+//  #navbar1{
+//    margin-right: @sideBarSmallWidth;
+//  }
+//  .sidenav {
+//    width: @sideBarSmallWidth;
+//  }
+//  .order-footer{
+//    width: @sideBarSmallWidth;
+//  }
+//  .footer{
+//    margin-right: @sideBarSmallWidth;
+//  }
+//}
 
 
