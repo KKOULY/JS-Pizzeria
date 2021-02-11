@@ -1,18 +1,15 @@
 @mainColor: #EA862E;
 @textColor: black;
-@sideBarWidth:250px;
-@sideBarSmallWidth:200px;
 @import "pizza-card";
-@import "order";
-@import "main-content";
 @import "my-brand";
+@import "sidebar";
 
 *{
-  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  //font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 body{
   background: #fde8c0;
-  min-width: 518px;
 }
 
 .bg-warning{
@@ -40,50 +37,11 @@ body{
   border: 2px solid rosybrown;
 }
 
-.no-padding{
-  padding: 0;
-}
-
-.sidenav {
-  height: 100%;
-  width: @sideBarWidth;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: #dddddd;
-  overflow-x: hidden;
-  box-shadow: 2px -1px 50px 0px rgba(34, 60, 80, 0.29);
-  span{
-    font-size: 14px;
-  }
-}
-#navbar1{
-  margin-right: @sideBarWidth;
-}
 #navbarText{
   font-size: 15px;
   .btn{
     font-size: 15px;
     margin: 5px;
-  }
-}
-#main-content{
-  padding-right: @sideBarWidth;
-}
-.order-footer{
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: @sideBarWidth;
-  background: white;
-
-  .row{
-    padding: 10px 15px 10px 15px;
-  }
-
-  .btn{
-    width: 100%;
   }
 }
 
@@ -120,32 +78,24 @@ body{
 
 #products-nav{
   margin-bottom: 10px;
+  .nav-link{
+    color: black;
+  }
 }
 
 .footer{
   height: 102px;
   background: #262626;
-  margin-top: 30px;
   box-shadow: 0px -3px 10px 2px rgba(34, 60, 80, 0.2);
-  margin-right: @sideBarWidth;
 }
 
-//@media (max-width: 576px) {
-//  #main-content{
-//    padding-right: @sideBarSmallWidth;
-//  }
-//  #navbar1{
-//    margin-right: @sideBarSmallWidth;
-//  }
-//  .sidenav {
-//    width: @sideBarSmallWidth;
-//  }
-//  .order-footer{
-//    width: @sideBarSmallWidth;
-//  }
-//  .footer{
-//    margin-right: @sideBarSmallWidth;
-//  }
-//}
+#navbar-order{
+  border-left: 1px solid #888888;
+}
+
+.icon{
+  margin-right: 5px;
+}
+
 
 
