@@ -1,0 +1,151 @@
+@mainColor: #EA862E;
+@textColor: black;
+@sideBarWidth:250px;
+@sideBarSmallWidth:200px;
+@import "pizza-card";
+@import "order";
+@import "main-content";
+@import "my-brand";
+
+*{
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+}
+body{
+  background: #fde8c0;
+  min-width: 518px;
+}
+
+.bg-warning{
+  background-color: @mainColor!important;
+  border-color: @mainColor!important;
+}
+.btn-warning{
+  color: white;
+  background-color: @mainColor;
+  border-color: @mainColor;
+}
+.btn{
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+.btn-circle{
+  border-radius: 50%!important;
+  box-sizing: border-box;
+  width: 30px!important;
+  height: 30px!important;
+}
+
+.item{
+  background: royalblue;
+  height: 200px;
+  border: 2px solid rosybrown;
+}
+
+.no-padding{
+  padding: 0;
+}
+
+.sidenav {
+  height: 100%;
+  width: @sideBarWidth;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #dddddd;
+  overflow-x: hidden;
+  box-shadow: 2px -1px 50px 0px rgba(34, 60, 80, 0.29);
+  span{
+    font-size: 14px;
+  }
+}
+#navbar1{
+  margin-right: @sideBarWidth;
+}
+#navbarText{
+  font-size: 15px;
+  .btn{
+    font-size: 15px;
+    margin: 5px;
+  }
+}
+#main-content{
+  padding-right: @sideBarWidth;
+}
+.order-footer{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: @sideBarWidth;
+  background: white;
+
+  .row{
+    padding: 10px 15px 10px 15px;
+  }
+
+  .btn{
+    width: 100%;
+  }
+}
+
+.discount-badge{
+  @discountWidth:70px;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  position: fixed;
+  left: 10px;
+  bottom: 0px;
+  height: 100px;
+  width: @discountWidth;
+  background: @mainColor;
+
+  .discount-img{
+    width: @discountWidth;
+    height: 10px;
+    position: absolute;
+    top: -10px;
+  }
+  h6{
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+  }
+  span{
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    border-top: 3px dotted darken(@mainColor,20%);
+    margin: 0px 5px 0px 5px;
+  }
+}
+
+#products-nav{
+  margin-bottom: 10px;
+}
+
+.footer{
+  height: 102px;
+  background: #262626;
+  margin-top: 30px;
+  box-shadow: 0px -3px 10px 2px rgba(34, 60, 80, 0.2);
+  margin-right: @sideBarWidth;
+}
+
+//@media (max-width: 576px) {
+//  #main-content{
+//    padding-right: @sideBarSmallWidth;
+//  }
+//  #navbar1{
+//    margin-right: @sideBarSmallWidth;
+//  }
+//  .sidenav {
+//    width: @sideBarSmallWidth;
+//  }
+//  .order-footer{
+//    width: @sideBarSmallWidth;
+//  }
+//  .footer{
+//    margin-right: @sideBarSmallWidth;
+//  }
+//}
+
+
