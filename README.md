@@ -1,4 +1,4 @@
-# JS-Pizza
-
-## Update 21.05.2016
-Відключено не потрібний JavaScript. https://github.com/seagullua/JS-Pizza/commit/4313efd27a23cab2890c38ece1b8cecd87faf4af
+<p align="center"><img src="https://avatanplus.com/files/resources/original/5d5155a97b06d16c85b69e20.png" width="100"></p>
+<h2 align="center">Pizzeria website</h2
+<h2 align="center"><a href="https://kkouly.github.io/JS-Pizzeria/Pizza-v-2">Link on page(version 2)</a></h2>  	
+<h2 align="center"><a href="https://kkouly.github.io/JS-Pizzeria/Pizza-v-1">Link on page(version 1)</a></h2>  	
