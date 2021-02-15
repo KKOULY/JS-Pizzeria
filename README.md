@@ -2,6 +2,6 @@
 <h2 align="center">Pizzeria website</h2>
 <h2 align="center"><a href="https://kkouly.github.io/JS-Pizzeria/Pizza-v-3/Frontend/www/index.html">Link on the lastest version of page</a></h2>  	
 
-- [Website version 1](https://kkouly.github.io/JS-Pizzeria/Pizza-v-1)
+- [Website version 1.0](https://kkouly.github.io/JS-Pizzeria/Pizza-v-1)
 - [Website version 1.2](https://kkouly.github.io/JS-Pizzeria/Pizza-v-2)
-- [Website version 2](https://kkouly.github.io/JS-Pizzeria/Pizza-v-3)
+- [Website version 2.0](https://kkouly.github.io/JS-Pizzeria/Pizza-v-3)
