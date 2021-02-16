@@ -8,6 +8,7 @@ var PizzaSize = {
     Big: "big_size",
     Small: "small_size"
 };
+var basil = require("basil.js");
 
 //Змінна в якій зберігаються перелік піц в кошику
 var Cart = [];
@@ -66,9 +67,9 @@ function clearCart() {
 
 function initialiseCart() {
     //Фукнція віпрацьвуватиме при завантаженні сторінки
-    //Тут можна наприклад, зчитати вміст корзини який збережено в Local Storage то показати його
-    //TODO: ...
-
+    var saved_carts = basil.localStorage.get("cart");
+    if(saved_carts) Cart = JSON.parse(saved_carts);
+    console.log(Cart);
     updateCart();
 }
 
@@ -80,7 +81,7 @@ function getPizzaInCart() {
 function updateCart() {
     //Функція викликається при зміні вмісту кошика
     //Тут можна наприклад показати оновлений кошик на екрані та зберегти вміт кошика в Local Storage
-
+    basil.localStorage.set("cart",JSON.stringify(Cart));
     //Очищаємо старі піци в кошику
     $cart.html("");
 
