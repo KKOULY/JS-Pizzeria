@@ -37,10 +37,7 @@ function filterPizza(filter) {
     var pizza_shown = [];
 
     Pizza_List.forEach(function(pizza){
-        //Якщо піка відповідає фільтру
-        //pizza_shown.push(pizza);
-
-        //TODO: зробити фільтри
+        if(filter(pizza)) pizza_shown.push(pizza);
     });
 
     //Показати відфільтровані піци
@@ -49,7 +46,36 @@ function filterPizza(filter) {
 
 function initialiseMenu() {
     //Показуємо усі піци
-    showPizzaList(Pizza_List)
+    showPizzaList(Pizza_List);
+
+    $("#all-filter").click(function () {
+       showPizzaList(Pizza_List);
+    });
+    $("#meat-filter").click(function () {
+        filterPizza(function (pizza) {
+            return !pizza.type.localeCompare('М’ясна піца');
+        });
+    });
+    $("#pineapple-filter").click(function () {
+        filterPizza(function (pizza) {
+            return (typeof pizza.content.pineapple !== 'undefined');
+        });
+    });
+    $("#mushrooms-filter").click(function () {
+        filterPizza(function (pizza) {
+            return (typeof pizza.content.mushroom !== 'undefined');
+        });
+    });
+    $("#seafood-prod-filter").click(function () {
+        filterPizza(function (pizza) {
+            return (typeof pizza.content.ocean !== 'undefined');
+        });
+    });
+    $("#vega-filter").click(function () {
+        filterPizza(function (pizza) {
+            return !pizza.type.localeCompare('Вега піца');
+        });
+    });
 }
 
 exports.filterPizza = filterPizza;

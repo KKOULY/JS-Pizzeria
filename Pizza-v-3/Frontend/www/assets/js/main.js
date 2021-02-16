@@ -188,7 +188,7 @@ exports.PizzaMenu_OneItem = ejs.compile("<%\r\n\r\nfunction getIngredientsArray(
 
 exports.PizzaCart_OneItem = ejs.compile("<li class=\"list-group-item d-flex flex-row \">\r\n    <div class=\"col-10 p-0\">\r\n        <div class=\"row\">\r\n            <h4 class=\"title mr-1\"><%= pizza.title %> <%if(size == \"small_size\"){%>(мала)<%}else if(size == \"big_size\"){%>(велика)<%}%></h4>\r\n        </div>\r\n        <div class=\"row d-flex align-items-center\">\r\n            <span class=\"badge\"><img src=\"assets/images/size-icon.svg\" class=\"p-0 pr-1\" alt=\"\"><%= pizza[size].weight %></span>\r\n            <span class=\"badge\"><img src=\"assets/images/weight.svg\" class=\"p-0 pr-1\" alt=\"\"><%= pizza[size].size %></span>\r\n        </div>\r\n        <div class=\"row\">\r\n            <div class=\"btn-group d-flex align-items-center bg-danger\">\r\n                <button type=\"button\" class=\"btn btn-danger btn-circle minus\">-</button>\r\n                <span class=\"font-weight-bold mr-2 ml-2\"><%= quantity%></span>\r\n                <button type=\"button\" class=\"btn btn-danger btn-circle plus\">+</button>\r\n            </div>\r\n        </div>\r\n        <h4 class=\"title mt-2 price\"><%= pizza[size].price*quantity %>₴</h4>\r\n    </div>\r\n    <div class=\"col-2 p-0\">\r\n        <img class=\"bg-img\" src=\"assets/images/pizza_1.jpg\" alt=\"\">\r\n    </div>\r\n    <button type=\"button\" class=\"close close-pizza\" aria-label=\"Close\">\r\n        <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n</li>");
 
-},{"ejs":7}],3:[function(require,module,exports){
+},{"ejs":8}],3:[function(require,module,exports){
 /**
  * Created by chaika on 25.01.16.
  */
@@ -215,6 +215,7 @@ var PizzaSize = {
     Big: "big_size",
     Small: "small_size"
 };
+var basil = require("basil.js");
 
 //Змінна в якій зберігаються перелік піц в кошику
 var Cart = [];
@@ -273,9 +274,9 @@ function clearCart() {
 
 function initialiseCart() {
     //Фукнція віпрацьвуватиме при завантаженні сторінки
-    //Тут можна наприклад, зчитати вміст корзини який збережено в Local Storage то показати його
-    //TODO: ...
-
+    var saved_carts = basil.localStorage.get("cart");
+    if(saved_carts) Cart = JSON.parse(saved_carts);
+    console.log(Cart);
     updateCart();
 }
 
@@ -287,7 +288,7 @@ function getPizzaInCart() {
 function updateCart() {
     //Функція викликається при зміні вмісту кошика
     //Тут можна наприклад показати оновлений кошик на екрані та зберегти вміт кошика в Local Storage
-
+    basil.localStorage.set("cart",JSON.stringify(Cart));
     //Очищаємо старі піци в кошику
     $cart.html("");
 
@@ -333,7 +334,7 @@ exports.getPizzaInCart = getPizzaInCart;
 exports.initialiseCart = initialiseCart;
 
 exports.PizzaSize = PizzaSize;
-},{"../Templates":2}],5:[function(require,module,exports){
+},{"../Templates":2,"basil.js":6}],5:[function(require,module,exports){
 /**
  * Created by chaika on 02.02.16.
  */
@@ -373,10 +374,7 @@ function filterPizza(filter) {
     var pizza_shown = [];
 
     Pizza_List.forEach(function(pizza){
-        //Якщо піка відповідає фільтру
-        //pizza_shown.push(pizza);
-
-        //TODO: зробити фільтри
+        if(filter(pizza)) pizza_shown.push(pizza);
     });
 
     //Показати відфільтровані піци
@@ -385,14 +383,448 @@ function filterPizza(filter) {
 
 function initialiseMenu() {
     //Показуємо усі піци
-    showPizzaList(Pizza_List)
+    showPizzaList(Pizza_List);
+
+    $("#all-filter").click(function () {
+       showPizzaList(Pizza_List);
+    });
+    $("#meat-filter").click(function () {
+        filterPizza(function (pizza) {
+            return !pizza.type.localeCompare('М’ясна піца');
+        });
+    });
+    $("#pineapple-filter").click(function () {
+        filterPizza(function (pizza) {
+            return (typeof pizza.content.pineapple !== 'undefined');
+        });
+    });
+    $("#mushrooms-filter").click(function () {
+        filterPizza(function (pizza) {
+            return (typeof pizza.content.mushroom !== 'undefined');
+        });
+    });
+    $("#seafood-prod-filter").click(function () {
+        filterPizza(function (pizza) {
+            return (typeof pizza.content.ocean !== 'undefined');
+        });
+    });
+    $("#vega-filter").click(function () {
+        filterPizza(function (pizza) {
+            return !pizza.type.localeCompare('Вега піца');
+        });
+    });
 }
 
 exports.filterPizza = filterPizza;
 exports.initialiseMenu = initialiseMenu;
 },{"../Pizza_List":1,"../Templates":2,"./PizzaCart":4}],6:[function(require,module,exports){
+(function () {
+	// Basil
+	var Basil = function (options) {
+		return Basil.utils.extend({}, Basil.plugins, new Basil.Storage().init(options));
+	};
+
+	// Version
+	Basil.version = '0.4.11';
+
+	// Utils
+	Basil.utils = {
+		extend: function () {
+			var destination = typeof arguments[0] === 'object' ? arguments[0] : {};
+			for (var i = 1; i < arguments.length; i++) {
+				if (arguments[i] && typeof arguments[i] === 'object')
+					for (var property in arguments[i])
+						destination[property] = arguments[i][property];
+			}
+			return destination;
+		},
+		each: function (obj, fnIterator, context) {
+			if (this.isArray(obj)) {
+				for (var i = 0; i < obj.length; i++)
+					if (fnIterator.call(context, obj[i], i) === false) return;
+			} else if (obj) {
+				for (var key in obj)
+					if (fnIterator.call(context, obj[key], key) === false) return;
+			}
+		},
+		tryEach: function (obj, fnIterator, fnError, context) {
+			this.each(obj, function (value, key) {
+				try {
+					return fnIterator.call(context, value, key);
+				} catch (error) {
+					if (this.isFunction(fnError)) {
+						try {
+							fnError.call(context, value, key, error);
+						} catch (error) {}
+					}
+				}
+			}, this);
+		},
+		registerPlugin: function (methods) {
+			Basil.plugins = this.extend(methods, Basil.plugins);
+		},
+		getTypeOf: function (obj) {
+			if (typeof obj === 'undefined' || obj === null)
+				return '' + obj;
+			return Object.prototype.toString.call(obj).replace(/^\[object\s(.*)\]$/, function ($0, $1) { return $1.toLowerCase(); });
+		}
+	};
+
+	// Add some isType methods: isArguments, isBoolean, isFunction, isString, isArray, isNumber, isDate, isRegExp, isUndefined, isNull.
+	var types = ['Arguments', 'Boolean', 'Function', 'String', 'Array', 'Number', 'Date', 'RegExp', 'Undefined', 'Null'];
+	for (var i = 0; i < types.length; i++) {
+		Basil.utils['is' + types[i]] = (function (type) {
+			return function (obj) {
+				return Basil.utils.getTypeOf(obj) === type.toLowerCase();
+			};
+		})(types[i]);
+	}
+
+	// Plugins
+	Basil.plugins = {};
+
+	// Options
+	Basil.options = Basil.utils.extend({
+		namespace: 'b45i1',
+		storages: ['local', 'cookie', 'session', 'memory'],
+		expireDays: 365,
+		keyDelimiter: '.'
+	}, window.Basil ? window.Basil.options : {});
+
+	// Storage
+	Basil.Storage = function () {
+		var _salt = 'b45i1' + (Math.random() + 1)
+				.toString(36)
+				.substring(7),
+			_storages = {},
+			_isValidKey = function (key) {
+				var type = Basil.utils.getTypeOf(key);
+				return (type === 'string' && key) || type === 'number' || type === 'boolean';
+			},
+			_toStoragesArray = function (storages) {
+				if (Basil.utils.isArray(storages))
+					return storages;
+				return Basil.utils.isString(storages) ? [storages] : [];
+			},
+			_toStoredKey = function (namespace, path, delimiter) {
+				var key = '';
+				if (_isValidKey(path)) {
+					key += path;
+				} else if (Basil.utils.isArray(path)) {
+					path = Basil.utils.isFunction(path.filter) ? path.filter(_isValidKey) : path;
+					key = path.join(delimiter);
+				}
+				return key && _isValidKey(namespace) ? namespace + delimiter + key : key;
+ 			},
+			_toKeyName = function (namespace, key, delimiter) {
+				if (!_isValidKey(namespace))
+					return key;
+				return key.replace(new RegExp('^' + namespace + delimiter), '');
+			},
+			_toStoredValue = function (value) {
+				return JSON.stringify(value);
+			},
+			_fromStoredValue = function (value) {
+				return value ? JSON.parse(value) : null;
+			};
+
+		// HTML5 web storage interface
+		var webStorageInterface = {
+			engine: null,
+			check: function () {
+				try {
+					window[this.engine].setItem(_salt, true);
+					window[this.engine].removeItem(_salt);
+				} catch (e) {
+					return false;
+				}
+				return true;
+			},
+			set: function (key, value, options) {
+				if (!key)
+					throw Error('invalid key');
+				window[this.engine].setItem(key, value);
+			},
+			get: function (key) {
+				return window[this.engine].getItem(key);
+			},
+			remove: function (key) {
+				window[this.engine].removeItem(key);
+			},
+			reset: function (namespace) {
+				for (var i = 0, key; i < window[this.engine].length; i++) {
+					key = window[this.engine].key(i);
+					if (!namespace || key.indexOf(namespace) === 0) {
+						this.remove(key);
+						i--;
+					}
+				}
+			},
+			keys: function (namespace, delimiter) {
+				var keys = [];
+				for (var i = 0, key; i < window[this.engine].length; i++) {
+					key = window[this.engine].key(i);
+					if (!namespace || key.indexOf(namespace) === 0)
+						keys.push(_toKeyName(namespace, key, delimiter));
+				}
+				return keys;
+			}
+		};
+
+		// local storage
+		_storages.local = Basil.utils.extend({}, webStorageInterface, {
+			engine: 'localStorage'
+		});
+		// session storage
+		_storages.session = Basil.utils.extend({}, webStorageInterface, {
+			engine: 'sessionStorage'
+		});
+
+		// memory storage
+		_storages.memory = {
+			_hash: {},
+			check: function () {
+				return true;
+			},
+			set: function (key, value, options) {
+				if (!key)
+					throw Error('invalid key');
+				this._hash[key] = value;
+			},
+			get: function (key) {
+				return this._hash[key] || null;
+			},
+			remove: function (key) {
+				delete this._hash[key];
+			},
+			reset: function (namespace) {
+				for (var key in this._hash) {
+					if (!namespace || key.indexOf(namespace) === 0)
+						this.remove(key);
+				}
+			},
+			keys: function (namespace, delimiter) {
+				var keys = [];
+				for (var key in this._hash)
+					if (!namespace || key.indexOf(namespace) === 0)
+						keys.push(_toKeyName(namespace, key, delimiter));
+				return keys;
+			}
+		};
+
+		// cookie storage
+		_storages.cookie = {
+			check: function (options) {
+				if (!navigator.cookieEnabled)
+					return false;
+				if (window.self !== window.top) {
+					// we need to check third-party cookies;
+					var cookie = 'thirdparty.check=' + Math.round(Math.random() * 1000);
+					document.cookie = cookie + '; path=/';
+					return document.cookie.indexOf(cookie) !== -1;
+				}
+				// if cookie secure activated, ensure it works (not the case if we are in http only)
+				if (options && options.secure) {
+					try {
+						this.set(_salt, _salt, options);
+						var hasSecurelyPersited = this.get(_salt) === _salt;
+						this.remove(_salt);
+						return hasSecurelyPersited;
+					} catch (error) {
+						return false;
+					}
+				}
+				return true;
+			},
+			set: function (key, value, options) {
+				if (!this.check())
+					throw Error('cookies are disabled');
+				options = options || {};
+				if (!key)
+					throw Error('invalid key');
+				var cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value);
+				// handle expiration days
+				if (options.expireDays) {
+					var date = new Date();
+					date.setTime(date.getTime() + (options.expireDays * 24 * 60 * 60 * 1000));
+					cookie += '; expires=' + date.toGMTString();
+				}
+				// handle domain
+				if (options.domain && options.domain !== document.domain) {
+					var _domain = options.domain.replace(/^\./, '');
+					if (document.domain.indexOf(_domain) === -1 || _domain.split('.').length <= 1)
+						throw Error('invalid domain');
+					cookie += '; domain=' + options.domain;
+				}
+				// handle same site
+				if (options.sameSite && ['lax','strict','none'].includes(options.sameSite.toLowerCase())) {
+					cookie += '; SameSite=' + options.sameSite;
+				}
+				// handle secure
+				if (options.secure === true) {
+					cookie += '; Secure';
+				}
+				document.cookie = cookie + '; path=/';
+			},
+			get: function (key) {
+				if (!this.check())
+					throw Error('cookies are disabled');
+				var encodedKey = encodeURIComponent(key);
+				var cookies = document.cookie ? document.cookie.split(';') : [];
+				// retrieve last updated cookie first
+				for (var i = cookies.length - 1, cookie; i >= 0; i--) {
+					cookie = cookies[i].replace(/^\s*/, '');
+					if (cookie.indexOf(encodedKey + '=') === 0)
+						return decodeURIComponent(cookie.substring(encodedKey.length + 1, cookie.length));
+				}
+				return null;
+			},
+			remove: function (key) {
+				// remove cookie from main domain
+				this.set(key, '', { expireDays: -1 });
+				// remove cookie from upper domains
+				var domainParts = document.domain.split('.');
+				for (var i = domainParts.length; i > 1; i--) {
+					this.set(key, '', { expireDays: -1, domain: '.' + domainParts.slice(- i).join('.') });
+				}
+			},
+			reset: function (namespace) {
+				var cookies = document.cookie ? document.cookie.split(';') : [];
+				for (var i = 0, cookie, key; i < cookies.length; i++) {
+					cookie = cookies[i].replace(/^\s*/, '');
+					key = cookie.substr(0, cookie.indexOf('='));
+					if (!namespace || key.indexOf(namespace) === 0)
+						this.remove(key);
+				}
+			},
+			keys: function (namespace, delimiter) {
+				if (!this.check())
+					throw Error('cookies are disabled');
+				var keys = [],
+					cookies = document.cookie ? document.cookie.split(';') : [];
+				for (var i = 0, cookie, key; i < cookies.length; i++) {
+					cookie = cookies[i].replace(/^\s*/, '');
+					key = decodeURIComponent(cookie.substr(0, cookie.indexOf('=')));
+					if (!namespace || key.indexOf(namespace) === 0)
+						keys.push(_toKeyName(namespace, key, delimiter));
+				}
+				return keys;
+			}
+		};
+
+		return {
+			init: function (options) {
+				this.setOptions(options);
+				return this;
+			},
+			setOptions: function (options) {
+				this.options = Basil.utils.extend({}, this.options || Basil.options, options);
+			},
+			support: function (storage) {
+				return _storages.hasOwnProperty(storage);
+			},
+			check: function (storage) {
+				if (this.support(storage))
+					return _storages[storage].check(this.options);
+				return false;
+			},
+			set: function (key, value, options) {
+				options = Basil.utils.extend({}, this.options, options);
+				if (!(key = _toStoredKey(options.namespace, key, options.keyDelimiter)))
+					return false;
+				value = options.raw === true ? value : _toStoredValue(value);
+				var where = null;
+				// try to set key/value in first available storage
+				Basil.utils.tryEach(_toStoragesArray(options.storages), function (storage, index) {
+					_storages[storage].set(key, value, options);
+					where = storage;
+					return false; // break;
+				}, null, this);
+				if (!where) {
+					// key has not been set anywhere
+					return false;
+				}
+				// remove key from all other storages
+				Basil.utils.tryEach(_toStoragesArray(options.storages), function (storage, index) {
+					if (storage !== where)
+						_storages[storage].remove(key);
+				}, null, this);
+				return true;
+			},
+			get: function (key, options) {
+				options = Basil.utils.extend({}, this.options, options);
+				if (!(key = _toStoredKey(options.namespace, key, options.keyDelimiter)))
+					return null;
+				var value = null;
+				Basil.utils.tryEach(_toStoragesArray(options.storages), function (storage, index) {
+					if (value !== null)
+						return false; // break if a value has already been found.
+					value = _storages[storage].get(key, options) || null;
+					value = options.raw === true ? value : _fromStoredValue(value);
+				}, function (storage, index, error) {
+					value = null;
+				}, this);
+				return value;
+			},
+			remove: function (key, options) {
+				options = Basil.utils.extend({}, this.options, options);
+				if (!(key = _toStoredKey(options.namespace, key, options.keyDelimiter)))
+					return;
+				Basil.utils.tryEach(_toStoragesArray(options.storages), function (storage) {
+					_storages[storage].remove(key);
+				}, null, this);
+			},
+			reset: function (options) {
+				options = Basil.utils.extend({}, this.options, options);
+				Basil.utils.tryEach(_toStoragesArray(options.storages), function (storage) {
+					_storages[storage].reset(options.namespace);
+				}, null, this);
+			},
+			keys: function (options) {
+				options = options || {};
+				var keys = [];
+				for (var key in this.keysMap(options))
+					keys.push(key);
+				return keys;
+			},
+			keysMap: function (options) {
+				options = Basil.utils.extend({}, this.options, options);
+				var map = {};
+				Basil.utils.tryEach(_toStoragesArray(options.storages), function (storage) {
+					Basil.utils.each(_storages[storage].keys(options.namespace, options.keyDelimiter), function (key) {
+						map[key] = Basil.utils.isArray(map[key]) ? map[key] : [];
+						map[key].push(storage);
+					}, this);
+				}, null, this);
+				return map;
+			}
+		};
+	};
+
+	// Access to native storages, without namespace or basil value decoration
+	Basil.memory = new Basil.Storage().init({ storages: 'memory', namespace: null, raw: true });
+	Basil.cookie = new Basil.Storage().init({ storages: 'cookie', namespace: null, raw: true });
+	Basil.localStorage = new Basil.Storage().init({ storages: 'local', namespace: null, raw: true });
+	Basil.sessionStorage = new Basil.Storage().init({ storages: 'session', namespace: null, raw: true });
+
+	// browser export
+	window.Basil = Basil;
+
+	// AMD export
+	if (typeof define === 'function' && define.amd) {
+		define(function() {
+			return Basil;
+		});
+	// commonjs export
+	} else if (typeof module !== 'undefined' && module.exports) {
+		module.exports = Basil;
+	}
+
+})();
 
 },{}],7:[function(require,module,exports){
+
+},{}],8:[function(require,module,exports){
 /*
  * EJS Embedded JavaScript templates
  * Copyright 2112 Matthew Eernisse (mde@fleegix.org)
@@ -1374,7 +1806,7 @@ if (typeof window != 'undefined') {
   window.ejs = exports;
 }
 
-},{"../package.json":9,"./utils":8,"fs":6,"path":10}],8:[function(require,module,exports){
+},{"../package.json":10,"./utils":9,"fs":7,"path":11}],9:[function(require,module,exports){
 /*
  * EJS Embedded JavaScript templates
  * Copyright 2112 Matthew Eernisse (mde@fleegix.org)
@@ -1543,31 +1975,36 @@ exports.cache = {
   }
 };
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports={
-  "_from": "ejs@^2.4.1",
+  "_args": [
+    [
+      "ejs@2.7.4",
+      "D:\\Homework\\Programming_2\\Pizza\\JS-Pizzeria"
+    ]
+  ],
+  "_from": "ejs@2.7.4",
   "_id": "ejs@2.7.4",
   "_inBundle": false,
   "_integrity": "sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==",
   "_location": "/ejs",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "ejs@^2.4.1",
+    "raw": "ejs@2.7.4",
     "name": "ejs",
     "escapedName": "ejs",
-    "rawSpec": "^2.4.1",
+    "rawSpec": "2.7.4",
     "saveSpec": null,
-    "fetchSpec": "^2.4.1"
+    "fetchSpec": "2.7.4"
   },
   "_requiredBy": [
     "/"
   ],
   "_resolved": "https://registry.npmjs.org/ejs/-/ejs-2.7.4.tgz",
-  "_shasum": "48661287573dcc53e366c7a1ae52c3a120eec9ba",
-  "_spec": "ejs@^2.4.1",
-  "_where": "D:\\Homework\\Programming_2\\JS-Pizza",
+  "_spec": "2.7.4",
+  "_where": "D:\\Homework\\Programming_2\\Pizza\\JS-Pizzeria",
   "author": {
     "name": "Matthew Eernisse",
     "email": "mde@fleegix.org",
@@ -1576,9 +2013,7 @@ module.exports={
   "bugs": {
     "url": "https://github.com/mde/ejs/issues"
   },
-  "bundleDependencies": false,
   "dependencies": {},
-  "deprecated": false,
   "description": "Embedded JavaScript templates",
   "devDependencies": {
     "browserify": "^13.1.1",
@@ -1613,7 +2048,7 @@ module.exports={
   "version": "2.7.4"
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 (function (process){
 // .dirname, .basename, and .extname methods are extracted from Node.js v8.11.1,
 // backported and transplited with Babel, with backwards-compat fixes
@@ -1919,7 +2354,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":11}],11:[function(require,module,exports){
+},{"_process":12}],12:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
