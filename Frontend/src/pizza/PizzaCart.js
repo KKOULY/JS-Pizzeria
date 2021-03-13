@@ -2,7 +2,7 @@
  * Created by chaika on 02.02.16.
  */
 var Templates = require('../Templates');
-
+var API = require("../API");
 //Перелік розмірів піци
 var PizzaSize = {
     Big: "big_size",
@@ -18,7 +18,7 @@ var $cart = $("#cart");
 
 var $totalPrice = $("#total");
 
-$(".clear").click(function(){
+$("#clearBtn").click(function(){
     clearCart();
     //Оновлюємо відображення
     updateCart();
@@ -54,7 +54,6 @@ function addToCart(pizza, size) {
 function removeFromCart(cart_item) {
     //Видалити піцу з кошика
     let cartIndex = findCartElementIndex(cart_item.pizza,cart_item.size);
-    console.log(cartIndex);
     if(cart_item !== 'undefined') Cart.splice(cartIndex,1);
     //Після видалення оновити відображення
     updateCart();
@@ -69,8 +68,21 @@ function initialiseCart() {
     //Фукнція віпрацьвуватиме при завантаженні сторінки
     var saved_carts = basil.localStorage.get("cart");
     if(saved_carts) Cart = JSON.parse(saved_carts);
-    console.log(Cart);
     updateCart();
+    $("#createOrderBtn").click(function () {
+        if(Cart.length>0){
+            var url = API.getURL()+"/order.html";
+            $(location).attr('href',url);
+        }
+    })
+    $("#changeOrderBtn").click(function () {
+        var url = API.getURL();
+        $(location).attr('href',url);
+    })
+    if($("#cart").hasClass("disabled")){
+        $("#clearBtn").removeClass("d-none");
+        $("#clearBtn").addClass("d-none");
+    } else  $("#clearBtn").removeClass("d-none");
 }
 
 function getPizzaInCart() {

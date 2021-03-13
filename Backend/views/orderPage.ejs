@@ -1,0 +1,67 @@
+<% include common/header.ejs %>
+
+<div class="container-fluid p-0">
+    <div class="row m-0 d-flex justify-content-center">
+        <div class="col-7 col-sm-7 col-md-8 col-lg-9 col-xl-10 pt-5 pl-5 pr-5">
+            <form>
+                <div class="form-group row pl-3">
+                    <label class="font-weight-bold">1. Контактні дані</label>
+                </div>
+                <div class="form-group row pl-5">
+                    <label for="inputName" class="col-12 col-md-2 col-form-label">Ім'я</label>
+                    <div class="col-md-10">
+                        <input class="form-control" id="inputName"  placeholder="Ім'я Прізвище">
+                        <div class="invalid-feedback">Введіть тільки власне ім'я, без цифр</div>
+                    </div>
+                </div>
+                <div class="form-group row pl-5">
+                    <label for="inputNumber" class="col-md-2 col-form-label">Телефон</label>
+                    <div class="col-md-10">
+                        <input class="form-control" id="inputNumber" placeholder="+380442225222">
+                        <div class="invalid-feedback">Введіть номер телефону у форматі +380 або почніть з 0</div>
+                    </div>
+                </div>
+                <div class="form-group row pl-5">
+                    <label for="inputAddress" class="col-md-2 col-form-label">Адреса</label>
+                    <div class="col-md-10">
+                        <input class="form-control" id="inputAddress" placeholder="Київ, вул. Спаська, 2">
+                        <div class="invalid-feedback">Введіть адресу</div>
+                    </div>
+                </div>
+            </form>
+            <div class="jumbotron pt-3 pl-5 mt-4 rounded">
+                <p class="font-weight-bold h5 mb-3">Інформація про замовлення</p>
+                <hr>
+                <p class="font-weight-bold">Приблизний час доставки:<span id="order-time-field" class="font-weight-normal pl-1">Невідомий</span></p>
+                <p class="font-weight-bold">Адреса доставки:<span id="address-field" class="font-weight-normal pl-1">Невідомо</span></p>
+            </div>
+            <div class="row d-flex justify-content-end p-3">
+                <button type="button" id="btn-next" class="btn btn-light btn-md">Далі<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" font-weight="600" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg></button>
+            </div>
+            <div class="mt-5 mb-5" id="map"></div>
+            <div class="w-100" id="liqpay"></div>
+            <!-- піключаємо скрипт -->
+            <script	src="//static.liqpay.ua/libjs/checkout.js">
+            </script>
+
+        </div>
+
+        <div class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2 d-flex flex-column justify-content-between" id="sidebar">
+            <ul class="list-group list-group-flush disabled" id="cart">
+            </ul>
+            <div class="row-fluid d-flex flex-column order-footer">
+                <div class="row d-flex align-items-center justify-content-between m-0 pb-0 pt-2">
+                    <h4 class="font-weight-bold">Всього:</h4>
+                    <h4 id="total" class="font-weight-bold">0₴</h4>
+                </div>
+                <div class="row d-flex align-items-center justify-content-center m-0 pt-0">
+                    <button id="changeOrderBtn" type="button" class="btn btn-outline-secondary btn-lg h6">Редагувати замовленяя</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include common/footer.ejs %>

@@ -3,10 +3,19 @@
  */
 var Templates = require('../Templates');
 var PizzaCart = require('./PizzaCart');
-var Pizza_List = require('../Pizza_List');
+var API = require('../API');
+var Pizza_List = [];
+
 
 //HTML едемент куди будуть додаватися піци
 var $pizza_list = $("#pizza_list");
+
+function initPizzaList(error, data){
+    if (error === null){
+        Pizza_List = data;
+        showPizzaList(Pizza_List);
+    }
+}
 
 function showPizzaList(list) {
     //Очищаємо старі піци в кошику
@@ -45,6 +54,7 @@ function filterPizza(filter) {
 }
 
 function initialiseMenu() {
+    API.getPizzaList(initPizzaList);
     //Показуємо усі піци
     showPizzaList(Pizza_List);
 

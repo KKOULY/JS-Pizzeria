@@ -1,0 +1,44 @@
+<% include common/header.ejs %>
+
+<div class="container-fluid p-0">
+    <div class="row m-0 d-flex justify-content-center">
+        <div class="col-7 col-sm-7 col-md-8 col-lg-9 col-xl-10 pt-4 p-0">
+            <div class="row justify-content-center m-0">
+                <h3 class="d-flex align-items-center">Усі піци<span class="badge bg-warning badge-pill badge-dark pizza-count">5</span></h3>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row justify-content-center" id="products-nav">
+                    <ul class="nav nav-pills d-flex justify-content-center">
+                        <li class="nav-item" id="all-filter"><a class="nav-link" href="#">Усі</a></li>
+                        <li class="nav-item" id="meat-filter"><a class="nav-link" href="#">Мясні</a></li>
+                        <li class="nav-item" id="pineapple-filter"><a class="nav-link" href="#">З ананасом</a></li>
+                        <li class="nav-item" id="mushrooms-filter"><a class="nav-link" href="#">З грибами</a></li>
+                        <li class="nav-item" id="seafood-prod-filter"><a class="nav-link" href="#">З морепродуктами</a></li>
+                        <li class="nav-item" id="vega-filter"><a class="nav-link" href="#">Вега</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container d-flex justify-content-center mb-5">
+                <div class="row w-100" style="max-width: 900px" id="pizza_list">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-2 d-flex flex-column justify-content-between" id="sidebar">
+            <ul class="list-group list-group-flush " aria-disabled="true" id="cart">
+            </ul>
+            <div class="row-fluid d-flex flex-column order-footer">
+                <div class="row d-flex align-items-center justify-content-between m-0 pb-0 pt-2">
+                    <h4 class="font-weight-bold">Всього:</h4>
+                    <h4 id="total" class="font-weight-bold">0₴</h4>
+                </div>
+                <div class="row d-flex align-items-center justify-content-center m-0 pt-0">
+                    <button type="button" id="createOrderBtn" class="btn btn-warning btn-lg">Замовити</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include common/footer.ejs %>
